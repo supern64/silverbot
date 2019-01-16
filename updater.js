@@ -29,6 +29,7 @@ const cmp = require('semver-compare')
 const npm = require('npm')
 const inquirer = require('inquirer')
 const promisify = require('util').promisify
+const childProcess = require('child_process')
 
 const manifestURL = 'https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/manifest.json'
 const downloadURL = 'https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/files/latest/'
@@ -110,8 +111,19 @@ async function checkForUpdates () {
     }
   })
 }
+function showVersions() {
+  var package = require("./package.json")
+  console.log("Version information:")
+  console.log("SilverBot version: " + package.version)
+  console.log("Node.js version: " + process.version)
+  for (var i in package.dependencies) {
+    var version = childProcess.execSync("npm show " + i + " version")
+    console.log(i + " version: " + version)
+  }
+}
 module.exports.update = update
 module.exports.checkForUpdates = checkForUpdates
+module.exports.showVersions = showVersions
 if (require.main === module) {
   main()
 }

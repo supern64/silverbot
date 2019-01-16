@@ -172,9 +172,9 @@ request.get('https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/manifest.j
           updater.update()
         } else {
           if (fs.existsSync('settings.json')) {
-            var choices = ['Launch SilverBot', 'Launch SilverBot w/ auto-restarts', new inquirer.Separator(), 'Reconfigure SilverBot', 'Check for updates', new inquirer.Separator(), 'Exit']
+            var choices = ['Launch SilverBot', 'Launch SilverBot w/ auto-restarts', new inquirer.Separator(), 'Reconfigure SilverBot', 'Check for updates', 'Show versions', new inquirer.Separator(), 'Exit']
           } else {
-            var choices = ['Configure SilverBot', new inquirer.Separator(), 'Exit']
+            var choices = ['Configure SilverBot', new inquirer.Separator(), 'Show versions', new inquirer.Separator(), 'Exit']
           }
           var question = {
             type: 'list',
@@ -199,6 +199,8 @@ request.get('https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/manifest.j
                 break
               case 'Check for updates':
                 updater.checkForUpdates()
+              case 'Show versions':
+                updater.showVersions()
             }
           })
         }
