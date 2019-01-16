@@ -14,5 +14,5 @@ Setup guide:
 
 Maintainance:  
 To update the bot via the command line, run `npm run update`. The updater will automatically download the bot if there are updates and will install new dependencies if any is required.  
-To reconfigure the bot, start the launcher via `npm start` then choose "Reconfigure SilverBot". Follow the guide again.
+To reconfigure the bot, start the launcher via `npm start` then choose "Reconfigure SilverBot". Follow the guide again.  
 (Note that this guide is very brief. If you want more detailed documentation please go to [our documentation](https://chanonlim.gitbook.io/silverbotv1)
