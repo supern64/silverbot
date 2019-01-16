@@ -17,6 +17,7 @@ Officially released 4th august, 2018 and discontinued 2nd january, 2019
 ## Requirements
 
 - Node.js [Install here](https://nodejs.org)
+- Imagemagick 
 - SilverBot v1 files
 
 
