@@ -25,11 +25,8 @@ A description of what was intended to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Versions:**
-You can find this using the binfo command.
-Tell us:
-- discord.js version
-- SilverBot's version
-- Node.js version 
+You can find this using the "Check versions" option in the launcher.  
+Copy the whole output here. It will take a while to complete.
 
 
 **Additional context**
