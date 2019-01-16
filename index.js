@@ -45,6 +45,12 @@ const request = require("request")
 
 let talkedRecently = new Set();
 let ratedrec = new Set();
+if (!fs.existsSync("finished")) fs.mkdirSync("finished")
+if (!fs.existsSync("customcom")) fs.mkdirSync("customcom")
+if (!fs.existsSync("customcom/prefix")) fs.mkdirSync("customcom/prefix")
+if (!fs.existsSync("customcom/com")) fs.mkdirSync("customcom/com")
+if (!fs.existsSync("blacklisted")) fs.mkdirSync("blacklisted")
+if (!fs.existsSync("poll")) fs.mkdirSync("poll")
 //---------------------------------------------------------------------------------------------------
 bot.on('ready', async() => {
     var app = await bot.fetchApplication()
@@ -63,6 +69,7 @@ bot.on('ready', async() => {
     var time1 = datetoday.getSeconds()
     var time2 = datetoday.getHours()
     var time3 = datetoday.getMinutes()
+    muscii(bot, {prefix: settings.prefix})
     fs.writeFileSync('./botstart.txt', days + "." + month + "." + year + " \n" + time2 + ":" + time3 + ":" + time1)
     console.log("------ SilverBotv1 ------")
     console.log("Logged in as  " + bot.user.username + "#" + bot.user.discriminator + "\n" + "\n")
@@ -148,7 +155,7 @@ bot.on('message', message => {
     if (command === `${mentionprefix}setgame` || command === `${prefix}setgame`) {
         if (message.author.id !== ownerID) return message.channel.send("`" + " Bot Owner only" + "`")
         const what = args.join(' ')
-        var text = gamename
+        var text = what
         var values = {
             servers: bot.guilds.size,
             users: bot.users.size
@@ -179,7 +186,7 @@ bot.on('message', message => {
           .setColor('GREEN')
           .addField("INPUT", "```" +code + "```")
           .addField("OUTPUT", "```" + (evaled) + "```")
-          return message.channel.send({ss})
+          return message.channel.send(ss)
         } catch (e) {
           console.log(e.stack);
           const err = new Discord.RichEmbed()
@@ -222,11 +229,11 @@ bot.on('message', message => {
             .addField("⬆️️ http", "HTTP request commands")
             .addField("🔧 configurable", "Configurable server commands for your guild. Such as.. set join message, set leave message.. and so on.. (**requires specific permission for these**)")
             .addField("⚒️ moderative", "the moderator commands (**requires specific permission for these**)")
-            .addField("NOTE", "**type " + prefix + "help <command category> to list commands on that category**")
             if (message.author.id == ownerID) {
               help.addField("🗡 owner", "Owner-only commands")
             }
-            message.channel.send({help})
+            help.addField("NOTE", "**type " + prefix + "help <command category> to list commands on that category**")
+            message.channel.send(help)
         }
         if (killoff === "basic") {
             const basic = new Discord.RichEmbed()
@@ -245,7 +252,7 @@ bot.on('message', message => {
             .addField(`${prefix}ginvite <CLIENT ID>`, "Generates an invite to add a bot")
             .addField(`${prefix}rate <1-6> <comment>`, "Rate the bot + leave a feedback (Feedbacks & ratings are published on my server, see my support server for more information)")
             .addField(`${prefix}setregion <regionname>`, "Sets the server region ('japan', 'singapore', 'eu-central', 'us-central', 'london', 'eu-west', 'amsterdam', 'brazil', 'us-west', 'hongkong', 'us-south', 'southafrica', 'us-east', 'sydney', 'frankfurt', 'russia')")
-            message.channel.send({basic})
+            message.channel.send(basic)
         }
         if(killoff === "gif") {
             const gif = new Discord.RichEmbed()
@@ -254,7 +261,7 @@ bot.on('message', message => {
             .addField(`${prefix}rainbow`, "Rainbowify the image! (WARNING: Flashing content of this GIF may be disturbing for your eyes)")
             .addField(`${prefix}weird`, "Uploads a GIF with weird things (WARNING: Flashing content of this GIF may be disturbing for your eyes)")
             .addField(`${prefix}gdrunk`, "Sends a GIF version of drunk")
-            message.channel.send({gif})
+            message.channel.send(gif)
         }
         if (killoff === "custom") {
             const custom = new Discord.RichEmbed()
@@ -263,7 +270,7 @@ bot.on('message', message => {
             .addField(`${prefix}ccadd <custom command name> <text>`, "Creates a new custom command")
             .addField(`${prefix}ccdelete <custom command name>`, "Deletes a custom command")
             .addField(`${prefix}cclist`, "View all of custom commands available on this server")
-            message.channel.send({custom})
+            message.channel.send(custom)
         }
         if (killoff === "music") {
             const problem = new Discord.RichEmbed()
@@ -294,7 +301,7 @@ bot.on('message', message => {
             .addField(`${prefix}reverse <MESSAGE>`, "Reverses your message")
             .addField(`${prefix}say <QUOTE>`, "Gets the bot to say something")
             .addField(`${prefix}btext <text>`, "Converts letters 'g' and 'b' into big B emoji")
-            message.channel.send({fun})
+            message.channel.send(fun)
         }
         if (killoff === "moderative") {
             const moderator = new Discord.RichEmbed()
@@ -311,7 +318,7 @@ bot.on('message', message => {
             .addField(`${prefix}delmsg <NUMBER OR NOTHING>`, 'Deletes specified amount of messages in the channel.')
             .addField(`${prefix}mute <USERMENTION>`, "Mute someone")
             .addField(`${prefix}unmute <USERMENTION>`, "Unmute someone")
-            message.channel.send({moderator})
+            message.channel.send(moderator)
         }
         if (killoff === "http") {
             const http = new Discord.RichEmbed()
@@ -319,7 +326,7 @@ bot.on('message', message => {
             .addField(`${prefix}youtube <SEARCHSTRING>`, "Searches youtube for a video.")
             .addField(`${prefix}urban <searchstring>`, "Searches a word using urban dictionary")
             .addField(`${prefix}ydownload <searchstring>`, "Download a video from youtube to mp3")
-            message.channel.send({http})
+            message.channel.send(http)
         }
         if (killoff === "configurable") {
             const confi = new Discord.RichEmbed()
@@ -338,7 +345,7 @@ bot.on('message', message => {
             .addField(`${prefix}userads <on/off> <kick/ban>`, "Kicks or bans user if their username contains discord.gg ads (Only works when user joins)")
             .addField(`${prefix}togglemodlog <on/off> <channel>`, "Sets where to place modlogs (MODLOGS ARE: ban, unban, kick,  mute and unmute) bot automaticly log them there if one of these events are initiated")
             .setFooter("{{user}} mentions the user, {{server}} mentions the server, {{owner}} puts the server owner username + tag, {{humans}} amount of humans in this server, {{members}} total number of members, {{bots}} number of bots in this server")
-            message.channel.send({confi})
+            message.channel.send(confi)
         }
         if(killoff === "image") {
             const confi = new Discord.RichEmbed()
@@ -355,7 +362,7 @@ bot.on('message', message => {
             .addField(`${prefix}drunk`, "Sends a drunk image")
             .addField(`${prefix}edge`, "Generates a image i can't describe what it even is (note: sometimes the image will just be blank, this is obv cuz it's all empty)")
             .setFooter("Some image commands may not be uploaded, if this happen, please re-use the command, this happens because Jimp & imagemagick can be very slow at saving the image, causing the bot to upload an empty file instead of wait for the processed image to be saved then upload it")
-            message.channel.send({confi})
+            message.channel.send(confi)
         }
         if (killoff === "owner") {
             const hidden = new Discord.RichEmbed()
@@ -366,7 +373,7 @@ bot.on('message', message => {
             .addField(`${prefix}setstatus <STATUS>`, "Sets the bot's status")
             .addField(`${prefix}unblacklist <USERID>`, "Unblacklists the user")
             .addField(`${prefix}restart <PASSWORD>`, "Restart the bot")
-            message.channel.send({hidden})
+            message.channel.send(hidden)
         }
       }
       if (command === `${prefix}banall` || command === mentionprefix + "banall") {
@@ -749,7 +756,7 @@ bot.on('message', message => {
           .addField("Number of roles", extra1)
           .addField("Discord join date:", userz.user.createdAt)
           .addField("Guild join date:", join)
-          return message.channel.send({usernfo})
+          return message.channel.send(usernfo)
         }).catch(err=> message.channel.send(`Couldn't find the user`))
     }
     if (command === `${prefix}sinfo` || command === mentionprefix + "sinfo") {
@@ -800,7 +807,7 @@ bot.on('message', message => {
               .addField("This server has", message.guild.channels.size + " total channels" + " " + "(" + vclist.size + " voice channels)" + " " + "(" + txlist.size + " text channels" + ")" + " (" + ctlist.size + " categories )")
               .addField("This server has", message.guild.roles.size + " Roles" + " (" + rlmention.size + " mentionable)" + " (" + rlhoist.size + " hoisted)" + " (" + rladmin.size + " admin)")
               .addField("Server created at:", createdate)
-              message.channel.send({sinfo})
+              message.channel.send(sinfo)
         });
     }
     if (command === `${prefix}binfo` || command === mentionprefix + "binfo") {
@@ -834,7 +841,7 @@ bot.on('message', message => {
           .addField("Support status", r.state, true)
           .addField("Important info", r.notes, true)
           .addField("Created by:", "SilverRoxetZZ#8200/SuperNiintendo#3700 (Open Source Version)", true)
-          return message.channel.send({aimbot})
+          return message.channel.send(aimbot)
         })
     }
     if (command === `${prefix}dice` || command === mentionprefix + "dice") {
@@ -1011,7 +1018,7 @@ bot.on('message', message => {
         setTimeout(() => {
           talkedRecently.delete(message.author.id);
         }, 10000);
-        var dir = `./finished/${message.guild.id}/`;
+        var dir = `./finished/${message.guild.id}`;
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
@@ -2707,7 +2714,7 @@ bot.on('message', message => {
                       fs.readFile(`./names/${message.guild.id}/` + what + ".txt", 'utf8', function(err, data2) {
                         fs.readFile(`./casename/${message.guild.id}/` + what + ".txt", 'utf8', function(err, data3) {
                           fs.readFile(`./color/${message.guild.id}/` + what + ".txt", 'utf8', function(err, data4) {
-                            if(message.author.id !== "477953017296060448") {
+                            if(message.author.id !== bot.user.id) {
                               const fuck = new Discord.RichEmbed()
                               .setDescription("Case " + what +  " | " + data3)
                               .addField("User", data2)
@@ -2737,10 +2744,12 @@ bot.on('message', message => {
           }
 });
 bot.on('guildDelete', guild => {
-    var text = gamename
-    var values = {
+    if (settings.game) {
+      var text = gamename
+      var values = {
         servers: bot.guilds.size,
         users: bot.users.size
+      }
     }
     var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
         return values[match]
@@ -2762,14 +2771,17 @@ bot.on('guildCreate', guild => {
           .addField("Owner", r.owner.id + " (" + r.owner.user.tag + ")")
           .addField("Humans", lol2)
           .addField("Bots", lol)
-          bot.channels.find(r=> r.id === "498511124657078272").send(embed)
+          if (settings.guildNotify) bot.channels.find(r=> r.id === settings.guildNotifyChannel).send(embed)
           guild.leave()
         }
-    });
-    var text = gamename
-    var values = {
+      });
+    }
+    if (settings.game) {
+      var text = gamename
+      var values = {
         servers: bot.guilds.size,
         users: bot.users.size
+      }
     }
     var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
         return values[match]
@@ -2790,7 +2802,7 @@ bot.on('guildCreate', guild => {
           .addField("Thanks for adding me to your server!", "I am made by SilverRoxetZZ, and I am a multi-purpose bot, maybe not a full multi-purpose but a meme bot.")
           .addField("type " + prefix + "help for a list of commands I can give you", "Enjoy using me!")
           if(!main1) return;
-          main1.send({help})
+          main1.send(help)
         }
     });
     if (settings.guildNotify) {
@@ -3090,7 +3102,7 @@ bot.on('guildBanAdd', (guild, user) => {
                   .addField("Moderator", altmoderator)
                   .setColor("#FF0000")
                   .addField("Reason", altreason !== null ? altreason : "`moderator, please do !r " + itemrare + " <reason>`")
-                  bot.channels.get(shit).send({embed})
+                  bot.channels.get(shit).send(embed)
                   .then(r=> {
                     fs.readdir(`./cases/${guild.id}/`, function(err, items) {
                       fs.readdir(`./names/${guild.id}/`, function(err, items2) {
@@ -3156,7 +3168,7 @@ bot.on('guildBanRemove', (guild, user) => {
                   .addField("Moderator", altmoderator)
                   .setColor("#00FF00")
                   .addField("Reason", altreason !== null ? altreason : "`moderator, please do !r " + itemrare + " <reason>`")
-                  bot.channels.get(shit).send({embed})
+                  bot.channels.get(shit).send(embed)
                   .then(r=> {
                     fs.readdir(`./cases/${guild.id}/`, function(err, items) {
                       fs.readdir(`./names/${guild.id}/`, function(err, items2) {
@@ -3248,7 +3260,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
                         .addField("Moderator", altmoderator)
                         .setColor("#FFFF00")
                         .addField("Reason", "`moderator, please do !r " + itemrare + " <reason>`")
-                        bot.channels.get(shit).send({embed})
+                        bot.channels.get(shit).send(embed)
                         .then(r=> {
                           fs.readdir(`./cases/${newMember.guild.id}`, function(err, items) {
                             fs.readdir(`./names/${newMember.guild.id}`, function(err, items2) {
@@ -3291,7 +3303,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
               .addField("Moderator", altmoderator)
               .setColor("#00FF00")
               .addField("Reason", "`moderator, please do !r " + itemrare + " <reason>`")
-              bot.channels.get(shit).send({embed})
+              bot.channels.get(shit).send(embed)
               .then(r=> {
                 fs.readdir(`./cases/${newMember.guild.id}`, function(err, items) {
                   fs.readdir(`./names/${newMember.guild.id}`, function(err, items2) {

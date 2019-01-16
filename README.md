@@ -2,7 +2,7 @@
 
   A multi purpose bot created by RaZeFeiXX#8200 and re-released by SuperNiintendo#3700
 
-Officially released 4th august, 2018 and discontinued 2nd january, 2019
+Officially released 4th august, 2018 and discontinued 2nd January, 2019
 
 ## Features
 
@@ -11,13 +11,13 @@ Officially released 4th august, 2018 and discontinued 2nd january, 2019
  - Custom anti alt (set required amount of days for users to join)
  - Image manipulation commands
  - fun commands
- - Cross sync moderation (Sync your bans accross guilds)
+ - Cross sync moderation (Sync your bans across guilds)
  - Good moderation
- 
+
 ## Requirements
 
 - Node.js [Install here](https://nodejs.org)
-- Imagemagick 
+- ImageMagick 
 - SilverBot v1 files
 
 
