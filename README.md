@@ -9,7 +9,7 @@ Setup guide:
 3. Run `npm start` to start the launcher. If an update is availible, I recommend that you install it.
 4. Select "Configure SilverBot" and follow through.
 5. Run `npm start` again and select "Launch SilverBot" or "Launch SilverBot w/ auto-restarts"
-6. Enjoy!
+6. Enjoy!  
 Maintainance:  
 To update the bot via the command line, run `npm run update`. The updater will automatically download the bot if there are updates and will install new dependencies if any is required.  
 To reconfigure the bot, start the launcher via `npm start` then choose "Reconfigure SilverBot". Follow the guide again.
