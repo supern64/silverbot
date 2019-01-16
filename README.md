@@ -12,11 +12,18 @@ Officially released 4th august, 2018 and discontinued 2nd january, 2019
  - Image manipulation commands
  - fun commands
  - Cross sync moderation (Sync your bans accross guilds)
+ - Good moderation
  
 ## Requirements
 
 - Node.js [Install here](https://nodejs.org)
 - SilverBot v1 files
+
+
+## Usage and restrictions
+
+* Do not publish this bot to bot lists
+* Do not claim you made this bot
 
 
 A general bot for Discord written in Node.js! (originally made by @razefeixx, modified and released by @chanonlim)  
