@@ -2,7 +2,7 @@
 A general bot for Discord written in Node.js! (originally made by @razefeixx, modified and released by @chanonlim)  
 Prerequesites:  
 You must have [Node.js](https://nodejs.org) 8 or higher along with NPM Package Manager and ImageMagick CLI to host this bot.  
-FFmpeg will be downloaded automatically.
+FFmpeg will be downloaded automatically.  
 Setup guide:
 1. Download the bot files from here and extract it. (Not finished yet)
 2. Go to the folder where you extracted it and type `npm install` to install the dependencies.
