@@ -27,8 +27,9 @@ If applicable, add screenshots to help explain your problem.
 **Versions:**
 You can find this using the binfo command.
 Tell us:
-- The discord.js version
+- discord.js version
 - SilverBot's version
+- Node.js version 
 
 
 **Additional context**
