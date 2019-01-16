@@ -68,7 +68,7 @@ bot.on('ready', async() => {
     console.log("Logged in as  " + bot.user.username + "#" + bot.user.discriminator + "\n" + "\n")
     console.log("Server Count: " + bot.guilds.size + "\n" + "\n")
     console.log("Prefix: " + settings.prefix + "\n" + "\n")
-    console.log("Add your bot with this url: " + `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=0` + "\n" + "\n")
+    console.log("Add your bot with this url: " + `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=909241430` + "\n" + "\n")
     if (games) {
       bot.user.setPresence({ game: { name: games, type: 0 } });
     }
@@ -391,13 +391,8 @@ bot.on('message', message => {
         }, 1000);
       }
       if (command === `${prefix}uplog` || command === mentionprefix + "uplog") {
-        fs.readFile("./uplog.txt", function(err, data) {
-            const updates = data.split("------")
-            if (update.length !== 0) {
-              message.channel.send("Most recent update: " updates[0])
-            }
-            message.channel.send("More update logs can be found at the support server")
-            message.channel.send({file: "./uplog.txt"})
+        request.get("https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/updates.json", {json:true}, (err, res, update) => {
+          message.channel.send("`Most recent update: " + updates.latest.version + "`\nNotes:\n```" + updates.latest.notes + "```")
         });
       }
     if(command === `${prefix}avatar` || command === mentionprefix + "avatar") {

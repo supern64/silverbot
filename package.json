@@ -19,7 +19,8 @@
     "snekfetch": "^4.0.4",
     "youtube-mp3-downloader": "^0.5.3",
     "yt-search": "^0.4.1",
-    "ytdl-core": "^0.29.1"
+    "ytdl-core": "^0.29.1",
+    "discord.js": "^11.4.2"
   },
   "devDependencies": {},
   "scripts": {
