@@ -82,3 +82,8 @@ typings/
 
 # SBv1 Setting
 settings.json
+
+# SBv1 DB
+poll/
+customcom/
+finished/

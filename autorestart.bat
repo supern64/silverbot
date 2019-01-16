@@ -1,3 +1,4 @@
+@echo off
 :a
 node index.js
 echo Crashed... Restarting
