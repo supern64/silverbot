@@ -1,0 +1,45 @@
+{
+  "name": "silverbot",
+  "version": "0.0.1",
+  "description": "A multipurpose bot by RaZeFeiXX, rereleased by SuperNiintendo!",
+  "main": "index.js",
+  "dependencies": {
+    "dbrlib": "0.0.4",
+    "discord.js-music-v11": "^1.3.4",
+    "ffmpeg-binaries": "^4.0.0",
+    "gm": "^1.23.1",
+    "imagemagick": "^0.1.3",
+    "inquirer": "^6.2.1",
+    "jimp": "^0.6.0",
+    "js-sha256": "^0.9.0",
+    "npm": "^6.5.0",
+    "relevant-urban": "^2.0.0",
+    "request": "^2.88.0",
+    "semver-compare": "^1.0.0",
+    "snekfetch": "^4.0.4",
+    "youtube-mp3-downloader": "^0.5.3",
+    "yt-search": "^0.4.1",
+    "ytdl-core": "^0.29.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js",
+    "start": "node launcher.js",
+    "update": "node updater.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chanonlim/silverbot.git"
+  },
+  "keywords": [
+    "discord",
+    "discordbot",
+    "discord.js"
+  ],
+  "author": "chanonlim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chanonlim/silverbot/issues"
+  },
+  "homepage": "https://github.com/chanonlim/silverbot#readme"
+}
