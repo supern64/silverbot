@@ -28,78 +28,77 @@ const packagejson = require('./package.json')
 const cmp = require('semver-compare')
 const npm = require('npm')
 const inquirer = require('inquirer')
+const promisify = require('util').promisify
+
 const manifestURL = 'https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/manifest.json'
 const downloadURL = 'https://chanonlim.pythonanywhere.com/botinfo/silverbotv1/files/latest/'
+const rget = promisify(request.get)
 
-function main () {
+async function main () {
   npm.load()
   console.log('--- SilverBotv1 Updater ---')
   console.log('Version: ' + packagejson.version)
   process.stdout.write('Checking for updates...')
-  request.get(manifestURL, { json: true }, (err, res, r) => {
+  request.get(manifestURL, { json: true }, async(err, res, r) => {
     if (err) { process.stdout.write(' Error\n'); throw err }
     if (cmp(r.latestVersion, packagejson.version) === 1) {
       process.stdout.write('\r')
       console.log('Updating... (' + packagejson.version + ' => ' + r.latestVersion + ')')
       for (var file in r.latestRelease.changedFiles) {
-        request(downloadURL + r.latestRelease.changedFiles[file], (err, res, fileData) => {
-          if (sha256(fileData) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
-            console.error('Cannot trust ' + file + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData))
-          } else {
-            fs.writeFileSync(file, fileData)
-          }
-        })
+        var fileData = await rget(downloadURL + r.latestRelease.changedFiles[file])
+        if (sha256(fileData.body) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
+          console.error('Cannot trust ' + r.latestRelease.changedFiles[file] + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData.body))
+        } else {
+          fs.writeFileSync(r.latestRelease.changedFiles[file], fileData.body)
+        }
       }
       if (r.latestRelease.requiresNewDependencies) {
         npm.install()
       }
-      process.exit()
     } else {
       console.log('You are using the latest version. (' + packagejson.version + ')')
       process.exit()
     }
   })
 }
-function update () {
-  request.get(manifestURL, { json: true }, (err, res, r) => {
+async function update () {
+  request.get(manifestURL, { json: true }, async(err, res, r) => {
     if (err) { process.stdout.write(' Error\n'); throw err }
     process.stdout.write('\r')
     console.log('Updating... (' + packagejson.version + ' => ' + r.latestVersion + ')')
     for (var file in r.latestRelease.changedFiles) {
-      request(downloadURL + r.latestRelease.changedFiles[file], (err, res, fileData) => {
-        if (sha256(fileData) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
-          console.error('Cannot trust ' + file + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData))
-        } else {
-          fs.writeFileSync(file, fileData)
-        }
-      })
+      var fileData = await rget(downloadURL + r.latestRelease.changedFiles[file])
+      if (sha256(fileData.body) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
+        console.error('Cannot trust ' + r.latestRelease.changedFiles[file] + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData.body))
+      } else {
+        fs.writeFileSync(r.latestRelease.changedFiles[file], fileData.body)
+      }
     }
     if (r.latestRelease.requiresNewDependencies) {
       npm.install()
     }
   })
 }
-function checkForUpdates () {
+async function checkForUpdates () {
   npm.load()
   console.log('--- SilverBotv1 Updater ---')
   console.log('Version: ' + packagejson.version)
   process.stdout.write('Checking for updates...')
-  request.get(manifestURL, { json: true }, (err, res, r) => {
+  request.get(manifestURL, { json: true }, async(err, res, r) => {
     if (err) { process.stdout.write(' Error\n'); throw err }
     if (cmp(r.latestVersion, packagejson.version) === 1) {
       process.stdout.write('\r')
       inquirer.prompt({ type: 'list', name: 'confirm', choices: ['Yes', 'No'], message: 'A new update is available. Would you like to install it?' })
-        .then(r => {
-          if (r.confirm == 'Yes') {
+        .then(async(ra) => {
+          if (ra.confirm == 'Yes') {
             console.log('Updating... (' + packagejson.version + ' => ' + r.latestVersion + ')')
             for (var file in r.latestRelease.changedFiles) {
-              request(downloadURL + r.latestRelease.changedFiles[file], (err, res, fileData) => {
-                if (sha256(fileData) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
-                  console.error('Cannot trust ' + file + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData))
-                } else {
-                  fs.writeFileSync(file, fileData)
-                }
-              })
+              var fileData = await rget(downloadURL + r.latestRelease.changedFiles[file])
+              if (sha256(fileData.body) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
+                console.error('Cannot trust ' + r.latestRelease.changedFiles[file] + ", SHA256's do not match.\nExpected: " + r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256 + '\nGot: ' + sha256(fileData.body))
+              } else {
+                fs.writeFileSync(r.latestRelease.changedFiles[file], fileData.body)
+              }
             }
             if (r.latestRelease.requiresNewDependencies) {
               npm.install()
