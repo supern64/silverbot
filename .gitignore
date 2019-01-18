@@ -87,3 +87,7 @@ settings.json
 poll/
 customcom/
 finished/
+
+# SBv1 Update Manifest-Make
+make.json
+make-manifest.js

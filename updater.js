@@ -56,6 +56,7 @@ async function main () {
       if (r.latestRelease.requiresNewDependencies) {
         npm.install()
       }
+      console.log("Finished updating to version " + r.latestVersion)
     } else {
       console.log('You are using the latest version. (' + packagejson.version + ')')
       process.exit()
@@ -67,6 +68,7 @@ async function update () {
     if (err) { process.stdout.write(' Error\n'); throw err }
     process.stdout.write('\r')
     console.log('Updating... (' + packagejson.version + ' => ' + r.latestVersion + ')')
+    var pb = new ProgressBar("[:bar] (:percent) [:current of :total files]  ETA: :etas", {total: r.latestRelease.changedFiles.length})
     for (var file in r.latestRelease.changedFiles) {
       var fileData = await rget(downloadURL + r.latestRelease.changedFiles[file])
       if (sha256(fileData.body) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
@@ -74,6 +76,7 @@ async function update () {
       } else {
         fs.writeFileSync(r.latestRelease.changedFiles[file], fileData.body)
       }
+      pb.tick(1)
     }
     if (r.latestRelease.requiresNewDependencies) {
       npm.install()
@@ -93,6 +96,7 @@ async function checkForUpdates () {
         .then(async(ra) => {
           if (ra.confirm == 'Yes') {
             console.log('Updating... (' + packagejson.version + ' => ' + r.latestVersion + ')')
+            var pb = new ProgressBar("[:bar] (:percent) [:current of :total files]  ETA: :etas", {total: r.latestRelease.changedFiles.length})
             for (var file in r.latestRelease.changedFiles) {
               var fileData = await rget(downloadURL + r.latestRelease.changedFiles[file])
               if (sha256(fileData.body) !== r.latestRelease.files[r.latestRelease.changedFiles[file]].sha256) {
@@ -100,6 +104,7 @@ async function checkForUpdates () {
               } else {
                 fs.writeFileSync(r.latestRelease.changedFiles[file], fileData.body)
               }
+              pb.tick(1)
             }
             if (r.latestRelease.requiresNewDependencies) {
               npm.install()
