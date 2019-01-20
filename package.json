@@ -1,6 +1,6 @@
 {
   "name": "silverbot",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A multipurpose bot by RaZeFeiXX, rereleased by SuperNiintendo!",
   "main": "index.js",
   "dependencies": {
@@ -14,7 +14,7 @@
     "jimp": "^0.6.0",
     "js-sha256": "^0.9.0",
     "node-opus": "^0.3.1",
-    "npm": "^6.5.0",
+    "npm": "^6.6.0",
     "progress": "^2.0.3",
     "relevant-urban": "^2.0.0",
     "request": "^2.88.0",
