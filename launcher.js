@@ -54,10 +54,10 @@ function launch (autoRestart) {
     // forward output of bot and autostarter
     child.stdout.setEncoding('utf8')
     child.stdout.on('data', (text) => {
-      console.log(text.toString())
+      process.stdout.write(text.toString())
     })
     child.stderr.on('data', (text) => {
-      console.error(text.toString())
+      process.stderr.write(text.toString())
     })
     child.on('error', (err) => {
       console.error('An error occured.')
