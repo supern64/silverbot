@@ -2785,7 +2785,7 @@ bot.on('guildDelete', guild => {
       var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
           return values[match]
       });
-      bot.user.setPresence(games, {type: 0})
+      bot.user.setPresence({ game: { name: games, type: 0 } });
     }
     if (settings.guildNotify) {
       bot.channels.find(r=> r.id === settings.guildNotifyChannel).send("`I've been removed from: " + guild.name + " ///Owner: "+ guild.owner.user.username + "#" + guild.owner.user.discriminator + ` // ${guild.members.size} members // ` + `ID: // ${guild.id}` + "`")
@@ -2818,7 +2818,7 @@ bot.on('guildCreate', guild => {
       var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
           return values[match]
       });
-      bot.user.setPresence(games, {type: 0})
+      bot.user.setPresence({ game: { name: games, type: 0 } });
     }
     fs.readFile(`./blacklisted/${guild.owner.id}/black.txt`, function(err, data) {
         if(data === "true") {
