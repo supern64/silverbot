@@ -1,6 +1,9 @@
 # SilverBot (v1)
 
-  A multi purpose bot created by RaZeFeiXX#8200 and re-released by SuperNiintendo#3700
+[![Chat Status](https://img.shields.io/discord/467525605043208192.svg)](https://discord.gg/cW5TyTB)
+![Latest Commit](https://img.shields.io/github/last-commit/chanonlim/silverbot.svg)
+
+A multi purpose bot created by RaZeFeiXX#8200 and re-released by SuperNiintendo#3700
 
 Officially released 4th august, 2018 and discontinued 2nd January, 2019
 
@@ -28,4 +31,5 @@ Officially released 4th august, 2018 and discontinued 2nd January, 2019
 
 ## Documentation
 
-Documentation is available at https://chanonlim.gitbook.io/silverbotv1
+Documentation is available at https://chanonlim.gitbook.io/silverbotv1  
+If you are stuck, feel free to join the [Support Server](https://discord.gg/cW5TyTB)
