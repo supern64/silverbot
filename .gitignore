@@ -87,6 +87,28 @@ settings.json
 poll/
 customcom/
 finished/
+widget/
+blacklisted/
+musicsettings/
+config/
+antialt/
+antiads/
+music/
+tags/
+tagowner/
+accounts/
+subscribers/
+accpublic/
+subbing/
+subdm/
+img/
+userads/
+modsetting/
+modchannel/
+cases/
+names/
+casename/
+color/
 
 # SBv1 Update Manifest-Make
 make.json

@@ -45,12 +45,39 @@ const request = require("request")
 
 let talkedRecently = new Set();
 let ratedrec = new Set();
+let issuereport = new Set()
 if (!fs.existsSync("finished")) fs.mkdirSync("finished")
 if (!fs.existsSync("customcom")) fs.mkdirSync("customcom")
+if (!fs.existsSync("widget")) fs.mkdirSync("widget")
 if (!fs.existsSync("customcom/prefix")) fs.mkdirSync("customcom/prefix")
 if (!fs.existsSync("customcom/com")) fs.mkdirSync("customcom/com")
 if (!fs.existsSync("blacklisted")) fs.mkdirSync("blacklisted")
 if (!fs.existsSync("poll")) fs.mkdirSync("poll")
+if (!fs.existsSync("musicsettings")) fs.mkdirSync("musicsettings")
+if (!fs.existsSync("config")) fs.mkdirSync("config")
+if (!fs.existsSync("antialt")) fs.mkdirSync("antialt")
+if (!fs.existsSync("antiads")) fs.mkdirSync("antiads")
+if (!fs.existsSync("music")) fs.mkdirSync("music")
+if (!fs.existsSync("tags")) fs.mkdirSync("tags")
+if (!fs.existsSync("tagowner")) fs.mkdirSync("tagowner")
+if (!fs.existsSync("poll/num")) fs.mkdirSync("poll/num")
+if (!fs.existsSync("poll/ques")) fs.mkdirSync("poll/ques")
+if (!fs.existsSync("poll/votes")) fs.mkdirSync("poll/votes")
+if (!fs.existsSync("accounts")) fs.mkdirSync("accounts")
+if (!fs.existsSync("subscribers")) fs.mkdirSync("subscribers")
+if (!fs.existsSync("accpublic")) fs.mkdirSync("accpublic")
+if (!fs.existsSync("subbing")) fs.mkdirSync("subbing")
+if (!fs.existsSync("subdm")) fs.mkdirSync("subdm")
+if (!fs.existsSync("img")) fs.mkdirSync("img")
+if (!fs.existsSync("img/gdrunk")) fs.mkdirSync("img/gdrunk")
+if (!fs.existsSync("img/weird")) fs.mkdirSync("img/weird")
+if (!fs.existsSync("userads")) fs.mkdirSync("userads")
+if (!fs.existsSync("modsetting")) fs.mkdirSync("modsetting")
+if (!fs.existsSync("modchannel")) fs.mkdirSync("modchannel")
+if (!fs.existsSync("cases")) fs.mkdirSync("cases")
+if (!fs.existsSync("names")) fs.mkdirSync("names")
+if (!fs.existsSync("casename")) fs.mkdirSync("casename")
+if (!fs.existsSync("color")) fs.mkdirSync("color")
 //---------------------------------------------------------------------------------------------------
 bot.on('ready', async() => {
     var app = await bot.fetchApplication()
@@ -72,9 +99,9 @@ bot.on('ready', async() => {
     muscii(bot, {prefix: settings.prefix})
     fs.writeFileSync('./botstart.txt', days + "." + month + "." + year + " \n" + time2 + ":" + time3 + ":" + time1)
     console.log("------ SilverBotv1 ------")
-    console.log("Logged in as  " + bot.user.username + "#" + bot.user.discriminator + "\n" + "\n")
-    console.log("Server Count: " + bot.guilds.size + "\n" + "\n")
-    console.log("Prefix: " + settings.prefix + "\n" + "\n")
+    console.log("Logged in as  " + bot.user.username + "#" + bot.user.discriminator)
+    console.log("Server Count: " + bot.guilds.size)
+    console.log("Prefix: " + settings.prefix)
     console.log("Add your bot with this url: " + `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=909241430` + "\n" + "\n")
     if (games) {
       bot.user.setPresence({ game: { name: games, type: 0 } });
@@ -291,7 +318,6 @@ bot.on('message', message => {
             .setColor(colors)
             .addField(`${prefix}roast <USERMENTION OR NOTHING>`, 'Roast someone so hardly')
             .addField(`${prefix}imposter <USERID> <MESSAGE>`, 'Imposter someone')
-            .addField(`${prefix}indianscammer <MESSAGE>`, 'Creates a message of a indian scammer')
             .addField(`${prefix}impost <NAME> <IMAGE URL> <MESSAGE>`, 'Create a custom impost message.')
             .addField(`${prefix}dice <0-whatever>`, "Rolls a dice")
             .addField(`${prefix}poll <QUESTION>`, "Generates a yes/no poll (reactions)")
@@ -500,8 +526,8 @@ bot.on('message', message => {
           const searchstring = args.join(' ')
           ytSearch(searchstring, function(err, results) {
             const videos = results.videos
-            const firstResult = videos[ 0 ]
-            if(err || videos[ 0 ] === undefined) return r.edit("`No results`")
+            const firstResult = videos[0]
+            if(err || videos[0] === undefined) return r.edit("`No results`")
             r.edit("https://www.youtube.com" + firstResult.url)
           });
         });
@@ -2487,6 +2513,12 @@ bot.on('message', message => {
         ratedrec.delete(message.author.id)
       }, 600000);*/
     }
+    if (command === `${prefix}issue` || command === `${mentionprefix}issue`)) {
+      return // TODO
+      /*setTimeout(function () {
+        issuereport.delete(message.author.id)
+      }, 600000);*/
+    }
     if(command === `${prefix}antiadswhitelist` || command === `${mentionprefix}antiadswhitelist`) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("`You must have 'ADMINISTRATOR' permission to use this command`")
         const chann = message.mentions.channels.first()
@@ -2750,10 +2782,11 @@ bot.on('guildDelete', guild => {
         servers: bot.guilds.size,
         users: bot.users.size
       }
+      var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
+          return values[match]
+      });
+      bot.user.setPresence(games, {type: 0})
     }
-    var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
-        return values[match]
-    });
     if (settings.guildNotify) {
       bot.channels.find(r=> r.id === settings.guildNotifyChannel).send("`I've been removed from: " + guild.name + " ///Owner: "+ guild.owner.user.username + "#" + guild.owner.user.discriminator + ` // ${guild.members.size} members // ` + `ID: // ${guild.id}` + "`")
     }
@@ -2782,10 +2815,11 @@ bot.on('guildCreate', guild => {
         servers: bot.guilds.size,
         users: bot.users.size
       }
+      var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
+          return values[match]
+      });
+      bot.user.setPresence(games, {type: 0})
     }
-    var games = text.replace(/\{\{([^}]+)\}\}/g, function(i, match) {
-        return values[match]
-    });
     fs.readFile(`./blacklisted/${guild.owner.id}/black.txt`, function(err, data) {
         if(data === "true") {
             setTimeout(function() {
