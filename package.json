@@ -4,7 +4,7 @@
   "description": "A multipurpose bot by RaZeFeiXX, rereleased by SuperNiintendo!",
   "main": "index.js",
   "dependencies": {
-    "dbrlib": "0.0.4",
+    "dbrlib": "^0.0.4",
     "discord.js": "^11.4.2",
     "discord.js-music-v11": "^1.3.4",
     "ffmpeg-binaries": "^4.0.0",
@@ -20,6 +20,7 @@
     "request": "^2.88.0",
     "semver-compare": "^1.0.0",
     "snekfetch": "^4.0.4",
+    "ws": "^6.1.3",
     "youtube-mp3-downloader": "^0.5.3",
     "yt-search": "^0.4.1",
     "ytdl-core": "^0.29.1"
