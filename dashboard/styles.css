@@ -1,0 +1,19 @@
+body {
+	background-color: #eff5ff;
+	font-family: 'Roboto', sans-serif;
+	padding: 1rem
+}
+.box {
+	border-style: inset;
+	width: 600px;
+	height: 300px;
+	text-align: left !important;
+}
+ul.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+a:hover {
+	text-decoration: none;
+}
