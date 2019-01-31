@@ -16,6 +16,7 @@ function pushMessage(level, message) {
 	var tn = document.createTextNode("[" + formattedTime + "] [" + level + "] " + message)
 	el.appendChild(tn)
 	br()
+	el.scrollTop = el.scrollHeight
 }
 function setStatus(status) {
 	el2.innerHTML = status.toUpperCase()
