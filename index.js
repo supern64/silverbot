@@ -42,7 +42,9 @@ const muscii = require("discord.js-music-v11")
 const snek = require("snekfetch");
 const package = require("./package.json")
 const request = require("request")
+const WebSocket = require("ws")
 
+let wss = new WebSocket.Server({port: 8000, host: "0.0.0.0"})
 let talkedRecently = new Set();
 let ratedrec = new Set();
 let issuereport = new Set()
@@ -79,7 +81,53 @@ if (!fs.existsSync("names")) fs.mkdirSync("names")
 if (!fs.existsSync("casename")) fs.mkdirSync("casename")
 if (!fs.existsSync("color")) fs.mkdirSync("color")
 //---------------------------------------------------------------------------------------------------
+var state = ""
+function parseCommand(ws, name) {
+  switch(name) {
+    case "shutdown":
+      ws.send('{"type": "message", "level": "info", "text": "Shutting down..."}')
+      ws.close(1000, "Bot is shutting down...")
+      process.exit(0)
+      break
+    default:
+      ws.send('{"type": "message", "level": "debug", "text": "Invalid command name"}')
+  }
+}
+wss.on("connection", (ws, req) => {
+  ws.send('{"type": "status", "status": "' + state + '"}')
+  ws.on("open", () => {
+    console.log("Connection opened from a client")
+  })
+  ws.on("error", () => {
+    ws.send('{"type": "status", "status": "error"}')
+    state = "error"
+  })
+  ws.on("message", (message) => {
+    try {
+      var data = JSON.parse(message)
+    } catch(e) {
+      ws.send('{"type": "message", "level": "debug", "text": "Server received invalid JSON."}')
+      return
+    }
+    switch(data.type) {
+      case "command":
+        parseCommand(ws, data.command)
+        break
+      default:
+        ws.send('{"type": "message", "level": "debug", "text": "Server received invalid type attribute."}')
+        break
+    }
+  })
+  bot.on('ready', () => {ws.send('{"type": "status", "status": "ready"}'); state = "ready"})
+  bot.on('error', (err) => {
+    ws.send('{"type": "status", "status": "error"}')
+    ws.send('{"type": "message", "level": "error", "text": "An error occured: ' + err + '"}')
+    state = "error"
+    console.error(err)
+  })
+})
 bot.on('ready', async() => {
+    state = "ready"
     var app = await bot.fetchApplication()
     global.ownerID = app.owner.id
     global.botID = bot.user.id
@@ -2513,7 +2561,7 @@ bot.on('message', message => {
         ratedrec.delete(message.author.id)
       }, 600000);*/
     }
-    if (command === `${prefix}issue` || command === `${mentionprefix}issue`)) {
+    if (command === `${prefix}issue` || command === `${mentionprefix}issue`) {
       return // TODO
       /*setTimeout(function () {
         issuereport.delete(message.author.id)
@@ -3368,5 +3416,4 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
     });
   });
 });
-
 bot.login(settings.token)

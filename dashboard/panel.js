@@ -89,3 +89,6 @@ ws.on("error", (err) => {
 	pushMessage("ERROR", "An error occured in WebSocket")
 	console.error("%c[WebSocket]", "color: #6c0196", "An error occured in WebSocket")
 })
+document.getElementById("offButton").addEventListener("click", (event) => {
+  ws.send('{"type": "command", "command": "shutdown"}')
+})
