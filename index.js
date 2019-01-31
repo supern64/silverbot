@@ -43,6 +43,9 @@ const snek = require("snekfetch");
 const package = require("./package.json")
 const request = require("request")
 const WebSocket = require("ws")
+const express = require("express")
+const app = express()
+const path = require("path")
 
 let wss = new WebSocket.Server({port: 8000, host: "0.0.0.0"})
 let talkedRecently = new Set();
@@ -81,6 +84,7 @@ if (!fs.existsSync("names")) fs.mkdirSync("names")
 if (!fs.existsSync("casename")) fs.mkdirSync("casename")
 if (!fs.existsSync("color")) fs.mkdirSync("color")
 //---------------------------------------------------------------------------------------------------
+// WebSocket server
 var state = ""
 function parseCommand(ws, name) {
   switch(name) {
@@ -126,6 +130,31 @@ wss.on("connection", (ws, req) => {
     console.error(err)
   })
 })
+//---------------------------------------------------------------------------------------------------
+// WebServer
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/index.html"))
+})
+app.get("/logs", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/log.html"))
+})
+app.get("/panel", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/panel.html"))
+})
+app.get("/index.js", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/index.js"))
+})
+app.get("/log.js", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/log.js"))
+})
+app.get("/panel.js", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/panel.js"))
+})
+app.get("/styles.css", (req, res) => {
+  res.sendFile(path.join(__dirname + "/dashboard/styles.css"))
+})
+//---------------------------------------------------------------------------------------------------
+// Bot code
 bot.on('ready', async() => {
     state = "ready"
     var app = await bot.fetchApplication()
@@ -151,6 +180,7 @@ bot.on('ready', async() => {
     console.log("Server Count: " + bot.guilds.size)
     console.log("Prefix: " + settings.prefix)
     console.log("Add your bot with this url: " + `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=909241430` + "\n" + "\n")
+    console.log("Visit the dashboard at http://localhost:5000")
     if (games) {
       bot.user.setPresence({ game: { name: games, type: 0 } });
     }
@@ -3416,4 +3446,5 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
     });
   });
 });
+app.listen(5000)
 bot.login(settings.token)
