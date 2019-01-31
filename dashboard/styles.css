@@ -8,6 +8,7 @@ body {
 	width: 600px;
 	height: 300px;
 	text-align: left !important;
+	overflow: scroll;
 }
 ul.navbar {
   list-style-type: none;
