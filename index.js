@@ -44,9 +44,9 @@ const package = require("./package.json")
 const request = require("request")
 const WebSocket = require("ws")
 const express = require("express")
-const app = express()
 const path = require("path")
 
+const app = express()
 let wss = new WebSocket.Server({port: 8000, host: "0.0.0.0"})
 let talkedRecently = new Set();
 let ratedrec = new Set();
@@ -3446,5 +3446,5 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
     });
   });
 });
-app.listen(5000)
+app.listen(settings.port)
 bot.login(settings.token)

@@ -133,7 +133,7 @@ function configurePrompt () {
         return name !== ''
       },
       when: (hash) => {
-        return hash.guildNotify
+        return hash.guildNotify ? true : false
       }
     },
     {
@@ -144,6 +144,12 @@ function configurePrompt () {
       filter: (r) => {
         return r == "Yes" ? true : false
       }
+    },
+    {
+      name: 'port',
+      message: 'Which port would you like your webserver to run on?',
+      type: 'input',
+      default: 5000
     }
   ]
   inquirer.prompt(questions).then(answers => {
