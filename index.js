@@ -180,7 +180,7 @@ bot.on('ready', async() => {
     console.log("Server Count: " + bot.guilds.size)
     console.log("Prefix: " + settings.prefix)
     console.log("Add your bot with this url: " + `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=909241430` + "\n" + "\n")
-    console.log("Visit the dashboard at http://localhost:5000")
+    console.log("Visit the dashboard at http://localhost:" + settings.port || 5000)
     if (games) {
       bot.user.setPresence({ game: { name: games, type: 0 } });
     }
