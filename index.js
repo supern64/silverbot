@@ -3446,5 +3446,5 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
     });
   });
 });
-app.listen(settings.port)
+app.listen(settings.port || 5000)
 bot.login(settings.token)
