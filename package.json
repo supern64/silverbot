@@ -1,6 +1,6 @@
 {
   "name": "silverbot",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A multipurpose bot by RaZeFeiXX, rereleased by SuperNiintendo!",
   "main": "index.js",
   "dependencies": {
