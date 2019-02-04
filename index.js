@@ -343,6 +343,7 @@ bot.on('message', message => {
         if (killoff === "basic") {
             const basic = new Discord.RichEmbed()
             .setColor(colors)
+			.addField(`${prefix}help`, "Displays the help message")
             .addField(`${prefix}inviteme`, "Sends an invite link to add this bot to your server")
             .addField(`${prefix}tag <ADD/EDIT/REMOVE> <TAGNAME> <MESSAGE (IF TAG ADD)>`, "View or publish a tag to worldwide")
             .addField(`${prefix}tag v <TAGNAME>`, "View a tag")
@@ -358,8 +359,7 @@ bot.on('message', message => {
             .addField(`${prefix}rate <1-6> <comment>`, "Rate the bot + leave a feedback (Feedbacks & ratings are published on my server, see my support server for more information)")
             .addField(`${prefix}setregion <regionname>`, "Sets the server region ('japan', 'singapore', 'eu-central', 'us-central', 'london', 'eu-west', 'amsterdam', 'brazil', 'us-west', 'hongkong', 'us-south', 'southafrica', 'us-east', 'sydney', 'frankfurt', 'russia')")
             message.channel.send(basic)
-        }
-        if(killoff === "gif") {
+        } else if (killoff === "gif") {
             const gif = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}garbagee`, "Sends a GIF with random shit i wrote in code (WARNING: Flashing content of this GIF may be disturbing for your eyes)")
@@ -367,8 +367,7 @@ bot.on('message', message => {
             .addField(`${prefix}weird`, "Uploads a GIF with weird things (WARNING: Flashing content of this GIF may be disturbing for your eyes)")
             .addField(`${prefix}gdrunk`, "Sends a GIF version of drunk")
             message.channel.send(gif)
-        }
-        if (killoff === "custom") {
+        } else if (killoff === "custom") {
             const custom = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}ccprefix <prefix>`, "Set the prefix for the custom commands")
@@ -376,8 +375,7 @@ bot.on('message', message => {
             .addField(`${prefix}ccdelete <custom command name>`, "Deletes a custom command")
             .addField(`${prefix}cclist`, "View all of custom commands available on this server")
             message.channel.send(custom)
-        }
-        if (killoff === "music") {
+        } else if (killoff === "music") {
             const problem = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}play <TEXT OR URL>`, "Play a music from youtube.")
@@ -390,8 +388,7 @@ bot.on('message', message => {
             .addField(`${prefix}queue`, "View the queue")
             .addField(`${prefix}clearqueue`, "Clears the queue")
             message.channel.send(problem)
-        }
-        if (killoff === "fun") {
+        } else if (killoff === "fun") {
             const fun = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}roast <USERMENTION OR NOTHING>`, 'Roast someone so hardly')
@@ -406,8 +403,7 @@ bot.on('message', message => {
             .addField(`${prefix}say <QUOTE>`, "Gets the bot to say something")
             .addField(`${prefix}btext <text>`, "Converts letters 'g' and 'b' into big B emoji")
             message.channel.send(fun)
-        }
-        if (killoff === "moderative") {
+        } else if (killoff === "moderative") {
             const moderator = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}kick <USERMENTION>`, "Kick someone from the server (Sends them a reason if provided)")
@@ -423,16 +419,14 @@ bot.on('message', message => {
             .addField(`${prefix}mute <USERMENTION>`, "Mute someone")
             .addField(`${prefix}unmute <USERMENTION>`, "Unmute someone")
             message.channel.send(moderator)
-        }
-        if (killoff === "http") {
+        } else if (killoff === "http") {
             const http = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}youtube <SEARCHSTRING>`, "Searches youtube for a video.")
             .addField(`${prefix}urban <searchstring>`, "Searches a word using urban dictionary")
             .addField(`${prefix}ydownload <searchstring>`, "Download a video from youtube to mp3")
             message.channel.send(http)
-        }
-        if (killoff === "configurable") {
+        } else if (killoff === "configurable") {
             const confi = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}setjoinmessage <on/off> <CHANNEL>`, "Sets where messages when new users join will be set to.")
@@ -450,8 +444,7 @@ bot.on('message', message => {
             .addField(`${prefix}togglemodlog <on/off> <channel>`, "Sets where to place modlogs (MODLOGS ARE: ban, unban, kick,  mute and unmute) bot automaticly log them there if one of these events are initiated")
             .setFooter("{{user}} mentions the user, {{server}} mentions the server, {{owner}} puts the server owner username + tag, {{humans}} amount of humans in this server, {{members}} total number of members, {{bots}} number of bots in this server")
             message.channel.send(confi)
-        }
-        if(killoff === "image") {
+        } else if(killoff === "image") {
             const confi = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}blur <USERMENTION/URL/NOTHING>`, "Generates a blurred image")
@@ -467,8 +460,7 @@ bot.on('message', message => {
             .addField(`${prefix}edge`, "Generates a image i can't describe what it even is (note: sometimes the image will just be blank, this is obv cuz it's all empty)")
             .setFooter("Some image commands may not be uploaded, if this happen, please re-use the command, this happens because Jimp & imagemagick can be very slow at saving the image, causing the bot to upload an empty file instead of wait for the processed image to be saved then upload it")
             message.channel.send(confi)
-        }
-        if (killoff === "owner") {
+        } else if (killoff === "owner" && message.owner.id == ownerID) {
             const hidden = new Discord.RichEmbed()
             .setColor(colors)
             .addField(`${prefix}eval`, "Evaluates code")
@@ -478,8 +470,10 @@ bot.on('message', message => {
             .addField(`${prefix}unblacklist <USERID>`, "Unblacklists the user")
             .addField(`${prefix}restart <PASSWORD>`, "Restart the bot")
             message.channel.send(hidden)
-        }
-      }
+        } else {
+			message.channel.send(killoff + " is not a help category. Did you misspell?")
+		}
+	  }
       if (command === `${prefix}banall` || command === mentionprefix + "banall") {
         if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("`"  + "You must have 'ADMINISTRATOR' permission" + "`")
         const who = args.join(' ')
@@ -3448,3 +3442,4 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
 });
 app.listen(settings.port || 5000)
 bot.login(settings.token)
+
