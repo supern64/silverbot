@@ -2,6 +2,7 @@
 
 [![Chat Status](https://img.shields.io/discord/467525605043208192.svg)](https://discord.gg/cW5TyTB)
 ![Latest Commit](https://img.shields.io/github/last-commit/chanonlim/silverbot.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b3dc902769a94625b9914b9d3a77ab0b)](https://www.codacy.com/app/chanonlim/silverbot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chanonlim/silverbot&amp;utm_campaign=Badge_Grade)
 
 A multi purpose bot created by RaZeFeiXX#8200 and re-released by SuperNiintendo#3700
 
